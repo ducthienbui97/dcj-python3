@@ -47,13 +47,13 @@ class Configuration(object):
                        .format(self._config_path, key, extra_message))
 
   def _GetRawConfigValue(self, key):
-    if unicode(key) not in self._parsed_config:
+    if str(key) not in self._parsed_config:
       self._RaiseConfigurationFileError(key, 'key not found')
-    return self._parsed_config[unicode(key)]
+    return self._parsed_config[str(key)]
 
   def GetStringConfigValue(self, key):
     value = self._GetRawConfigValue(key)
-    if not isinstance(value, (str, unicode,)):
+    if not isinstance(value, (str, str,)):
       self._RaiseConfigurationFileError(
           key, 'expected value to be a string but it is {0!r}.'.format(value))
     return value
@@ -65,7 +65,7 @@ class Configuration(object):
       self._RaiseConfigurationFileError(
           key, 'expected value to be a list but it is {0!r}.'.format(value))
     for item in value:
-      if not isinstance(item, (str, unicode,)):
+      if not isinstance(item, (str, str,)):
         self._RaiseConfigurationFileError(
             key, 'expected all items of the list to be strings but one of them '
             'is {0!r}.'.format(item))
